@@ -1,7 +1,7 @@
 import random
 
 # Fixed prime agreed on
-p = 17
+p = 3761
 
 # Common knowledge (2 parties agree on a value)
 s = [None, None, None]
@@ -28,10 +28,10 @@ class Party:
     return(v % p)
         
 # Step 1
-        
-parties = [Party(0, 4), Party(1, 5), Party(2, 7)]
-
+    
 print("Computing shares\n")
+parties = [Party(0, 1), Party(1, 0), Party(2, 1)]
+
 for i in range(0, 3):
   P = parties[i]
   print(str(P.x) + " = (" +  str(P.r[i][0])  + " + " + str(P.r[i][1]) + " + " + str(P.r[i][2]) + ") % " + str(p))
@@ -40,6 +40,7 @@ for i in range(0, 3):
 
 # Step 2
   
+print("Sending shares\n")
 for i in range(0, 3):
   P_i = parties[i]
   for j in range(0, 3):
@@ -50,7 +51,7 @@ for i in range(0, 3):
             # P_i sends to P_j r[i,k]
             P_j.r[i][k] = P_i.r[i][k]    
 
-print("Sending shares\n")
+
 for i in range(0, 3):
   P = parties[i]
   print("r = " + str(P.r))
@@ -58,7 +59,7 @@ for i in range(0, 3):
   
 # Step 3
   
-print("Computing result\n")
+print("Computing and announce partial results\n")
 for i in range(0, 3):
     P_i = parties[i]
     for l in range(0,3):
@@ -75,6 +76,7 @@ print("Common knowledge: " + str(s) + "\n")
     
 # Step 4
 
+print("Computing result\n")
 for i in range(0, 3):
     print("P_" + str(i) + " computes " +  str(parties[i].result()))
     
